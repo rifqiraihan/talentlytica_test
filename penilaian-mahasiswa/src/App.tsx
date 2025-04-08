@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useCallback, memo } from "react";
 import "./App.css";
 
 const students = Array.from({ length: 10 }, (_, i) => `mahasiswa_${i + 1}`);
@@ -10,6 +10,47 @@ const aspekPenilaian = [
 ];
 const options = Array.from({ length: 10 }, (_, i) => i + 1);
 
+const StudentRow = memo(
+  ({
+    mhs,
+    aspekPenilaian,
+    handleChange,
+  }: {
+    mhs: string;
+    aspekPenilaian: string[];
+    handleChange: (aspek: string, mahasiswa: string, value: number) => void;
+  }) => {
+    return (
+      <div className="table-row">
+        <div className="table-cell student-cell">
+          <img
+            src={`https://ui-avatars.com/api/?name=${mhs.replace("_", "+")}&background=random&size=40`}
+            alt="profile"
+            className="avatar"
+          />
+          <span>{mhs.replace("_", " ")}</span>
+        </div>
+        {aspekPenilaian.map((aspek) => (
+          <div key={aspek} className="table-cell">
+            <select
+              defaultValue={1}
+              onChange={(e) =>
+                handleChange(aspek, mhs, parseInt(e.target.value))
+              }
+            >
+              {options.map((val) => (
+                <option key={val} value={val}>
+                  {val}
+                </option>
+              ))}
+            </select>
+          </div>
+        ))}
+      </div>
+    );
+  }
+);
+
 function App() {
   const nilaiRef = useRef<Record<string, Record<string, number>>>(
     Object.fromEntries(
@@ -20,13 +61,12 @@ function App() {
     )
   );
 
-  const handleChange = (
-    aspek: string,
-    mahasiswa: string,
-    value: number
-  ) => {
-    nilaiRef.current[aspek][mahasiswa] = value;
-  };
+  const handleChange = useCallback(
+    (aspek: string, mahasiswa: string, value: number) => {
+      nilaiRef.current[aspek][mahasiswa] = value;
+    },
+    []
+  );
 
   const handleSimpan = () => {
     console.log("Output:", nilaiRef.current);
@@ -47,32 +87,12 @@ function App() {
         </div>
 
         {students.map((mhs) => (
-          <div className="table-row" key={mhs}>
-            <div className="table-cell student-cell">
-              <img
-                src={`https://ui-avatars.com/api/?name=${mhs.replace("_", "+")}&background=random&size=40`}
-                alt="profile"
-                className="avatar"
-              />
-              <span>{mhs.replace("_", " ")}</span>
-            </div>
-            {aspekPenilaian.map((aspek) => (
-              <div key={aspek} className="table-cell">
-                <select
-                  defaultValue={1}
-                  onChange={(e) =>
-                    handleChange(aspek, mhs, parseInt(e.target.value))
-                  }
-                >
-                  {options.map((val) => (
-                    <option key={val} value={val}>
-                      {val}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            ))}
-          </div>
+          <StudentRow
+            key={mhs}
+            mhs={mhs}
+            aspekPenilaian={aspekPenilaian}
+            handleChange={handleChange}
+          />
         ))}
       </div>
 
