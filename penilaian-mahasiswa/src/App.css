@@ -1,0 +1,126 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.container {
+  max-width: 75vw;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  overflow-x: auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.table {
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  color: black;
+  min-width: 600px;
+}
+
+.table-header,
+.table-row {
+  display: flex;
+}
+
+.table-cell {
+  flex: 1;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+}
+
+.header-cell {
+  font-weight: bold;
+  background-color: #f3f3f3;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.student-cell {
+  justify-content: flex-start;
+  gap: 0.75rem;
+  padding-left: 1.5rem;
+  font-weight: 500;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+select {
+  font-size: 1rem;
+  padding: 0.5rem;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: black;
+}
+
+.simpan-button {
+  margin-top: 2rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.simpan-button:hover {
+  background-color: #0056b3;
+}
+
+/* ✅ Responsive styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    width: 100%;
+  }
+
+  .table {
+    border-radius: 8px;
+  }
+
+  .table-header,
+  .table-row {
+    min-width: 600px;
+  }
+
+  .table-cell {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  select {
+    font-size: 0.9rem;
+    padding: 0.4rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+}
